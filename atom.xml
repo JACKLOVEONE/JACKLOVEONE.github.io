@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-23T04:48:37.624Z</updated>
+  <updated>2018-04-23T07:55:39.505Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/04/23/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/"/>
+    <id>http://yoursite.com/2018/04/23/新建文本文档/</id>
+    <published>2018-04-23T07:46:18.663Z</published>
+    <updated>2018-04-23T07:55:39.505Z</updated>
+    
+    <content type="html"><![CDATA[<p>#��׺����ѧϰ�ʼ�</p><p>#��׺������ʲô�ã�</p><p>�����ַ�����һ������</p><p>�о��ⶫ���е���������Ҳû��ʲô�Ƚϼ򵥵Ľ��⣬��Ū�˼��죨̫�ˣ�</p><p>д��ѧϰ�ʼǣ���</p><p>#����</p><p>1.dc3</p><p>2.����</p><p>���ڱ���̫�ˣ�ֻ�ᱶ�����ͽ���������</p><p>#ѧϰǰ��</p><p>���ȴ�ҵ�ʳ��һ�»������򣬿��Ե��ٶȰٿ�ѧϰ���и���ŵ�ӡ��ͺ�</p><p>#һЩ����</p><p>sa[i]������Ϊi�ĺ�׺����ʼλ��</p><p>Rank[i]���ӵ�i��λ�ÿ�ʼ�ĺ�׺������</p><p>y[i]��������sa[i]һ�����������������Ҫ��</p><p>ch[i]���ַ���</p><p>c[i]��ͳ�ƴ�������������</p><p>sa[i],rank[i]ֻҪ����֪��һ������Խ���һ�����</p><p>����sa[i]=k;��rank[sa[i]]=i(rank[k]=i);</p><p>#����</p><p>�򵥵Ľ��������������ȴ�����Ϊ1�ĺ�׺���������ٴ�����Ϊ2�ĺ�׺������</p><p>�����ǳ���Ϊ4�ģ�Ȼ����8……һֱ������k�������ַ�������n��</p><p>�����Ļ����Ӷ�̫�ߣ������Ļ����Ӷȿ�������O��nlogn��</p><p>����������ʲô�ô��أ���</p><p>���Ǽٶ������Ѿ���������Ϊ2^k�ĺ�׺�ˣ���2^0,2^1,…..2^(k-1)�Ѿ�����</p><p>��ô��ʱ��������ʵ����ͨ������Ϊ2^(k-1)�ĺ�׺�����������</p><p>2^k����������2^(k-1)�����ַ���ƴ��</p><p>ֻ�轫��������2^(k-1)�����ַ����ֱ���Ϊ���������һ�����ؼ��ֽ�������Ϳ��Եõ�����rank,sa��</p><p>��һ�ž����ͼ�������</p><p><img src="https://images2018.cnblogs.com/blog/1095942/201803/1095942-20180325171137964-1583876915.png" alt="�˴�����ͼƬ������"></p><p>ע�����û�еڶ��ؼ�����0��</p><p>#����Ϊ1</p><p>����</p><blockquote><p>for(int i=1;i&lt;=n;++i)Rank[i]=ch[i];//����Rank��Ϊ�ַ�����asc�룬��������<br><code>//�����������</code><br>for(int i=1;i&lt;=n;++i)c[Rank[i]]++;<br>for(int i=1;i&lt;=m;++i)c[i]+=c[i-1];<br>for(int i=n;i&gt;=1;–i)sa[c[Rank[i]]–]=i;//–���Գ������ַ�����ͬ�����</p></blockquote><p>#���ȴ���1</p><p>��������һ�κ���Ҫ�Ĵ��룬ע�����</p><p>�ڶ��ؼ��ֵ�λ�õ��ڵ�һ�ؼ��ֵ�λ�ü��ϴ�ʱ����ĺ�׺���ȡ�</p><p>��һ��ѭ��ö�ٵ�һ�ؼ���λ��</p><p>�ڶ���ö�ٵڶ��ؼ���λ��</p><p>���ֵ�yֱ�ӿ��Դ����ֵ�sa�õ�</p><p>y[k]=i��ʾ����Ϊk����ڶ��ؼ�����Եĵ�һ�ؼ��ֵ�λ��</p><blockquote><p>for(int i=n-ln+1;i&lt;=n;++i)y[++k]=i;//���ǲ�0��������϶�����ǰ��<br>for(int i=1;i&lt;=n;++i)if(sa[i]&gt;ln)y[++k]=sa[i]-ln;</p></blockquote><p>������ѭ���Ѿ����ڶ��ؼ��������ˣ���Ϊsa������ģ�ö���Ǵӣ�i….n���Ѱ���С����</p><p>����ٴ�Ħһ��</p><p>�����������һ�ؼ���</p><blockquote><p>for(int i=1;i&lt;=n;++i)wr[i]=Rank[i];//����һ��<br>for(int i=1;i&lt;=n;++i)c[wr[y[i]]]++;<br>for(int i=1;i&lt;=m;++i)c[i]+=c[i-1];<br>for(int i=n;i&gt;=1;–i)sa[c[wr[y[i]]]–]=y[i];<br>for(int i=1;i&lt;=n;++i)wr[i]=Rank[i];</p></blockquote><p>����ȽϺ���⣬�Ͳ�����</p><p>������Rank</p><p>Ҫ��һ���أ���ȵ��ַ���������ͬ������</p><blockquote><p>bool cmp(int k1,int k2,int ls){<br>    return wr[k1]==wr[k2]&amp;&amp;wr[k1+ls]==wr[k2+ls];<br>}</p><p>for(int i=2;i&lt;=n;++i){<br>    if(!cmp(sa[i],sa[i-1],ln))++p;<br>    Rank[sa[i]]=p; }</p></blockquote><p>#��������</p><blockquote><p>#include&lt;bits/stdc++.h&gt;</p><p>using namespace std; const int maxn=1000006;</p><p>int wr[maxn],y[maxn],a[maxn],Rank[maxn],k; int<br>sa[maxn],ln,p,n,m=256,c[maxn];char ch[maxn];</p><p>bool cmp(int k1,int k2,int ls){<br>    <code>return wr[k1]==wr[k2]&amp;&amp;wr[k1+ls]==wr[k2+ls]; }</code></p><p><code>void DA(){</code><br>    for(int i=1;i&lt;=n;++i)c[Rank[i]]++;<br>    for(int i=1;i&lt;=m;++i)c[i]+=c[i-1];<br>    for(int i=n;i&gt;=1;–i)sa[c[Rank[i]]–]=i;<br>    ln=1;p=0;<br>    <code>while(p&lt;n){</code><br>        <code>k=0;</code><br>        <code>memset(c,0,sizeof c);</code><br>        <code>for(int i=n-ln+1;i&lt;=n;++i)y[++k]=i;</code><br>        <code>for(int i=1;i&lt;=n;++i)if(sa[i]&gt;ln)y[++k]=sa[i]-ln;</code><br>        <code>for(int i=1;i&lt;=n;++i)wr[i]=Rank[i];</code><br>        <code>for(int i=1;i&lt;=n;++i)c[wr[y[i]]]++;</code><br>        <code>for(int i=1;i&lt;=m;++i)c[i]+=c[i-1];</code><br>        <code>for(int i=n;i&gt;=1;--i)sa[c[wr[y[i]]]--]=y[i];</code><br>        <code>for(int i=1;i&lt;=n;++i)wr[i]=Rank[i];</code><br>        <code>p=1;Rank[sa[1]]=1;</code><br>        <code>for(int i=2;i&lt;=n;++i){</code><br>            <code>if(!cmp(sa[i],sa[i-1],ln))++p;</code><br>            <code>Rank[sa[i]]=p;</code><br>        <code>}m=p;ln&lt;&lt;=1;</code><br>    <code>} }</code></p><p><code>int main(){</code><br>    <code>scanf(&quot;%s&quot;,ch+1);</code><br>    <code>n=strlen(ch+1);</code><br>    <code>for(int i=1;i&lt;=n;++i)Rank[i]=ch[i];</code><br>    <code>DA();</code><br>    <code>for(int i=1;i&lt;=n;++i)printf(&quot;%d &quot;,sa[i]);</code><br>    <code>return 0; }</code></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;#��׺����ѧϰ�ʼ�&lt;/p&gt;
+&lt;p&gt;#��׺������ʲô�ã�&lt;/p&gt;
+&lt;p&gt;�����ַ�����һ������&lt;/p&gt;
+&lt;p&gt;�о��ⶫ���е���������Ҳû��ʲô�Ƚϼ򵥵Ľ��⣬��Ū�˼��죨̫�ˣ�&lt;/p&gt;
+&lt;p&gt;д��ѧϰ�ʼǣ���&lt;/p
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
