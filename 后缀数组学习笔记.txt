@@ -1,0 +1,199 @@
+---
+title: 后缀数组学习笔记
+tags:
+categories:
+---
+
+
+## 后缀数组有什么用？
+
+处理字符串的一大利器
+
+感觉这东西有点玄，网上也没有什么比较简单的讲解，我弄了几天（太菜）
+
+写个学习笔记！！
+
+ 
+
+## 方法
+
+1.dc3
+
+2.倍增
+
+由于本人太菜，只会倍增，就讲讲倍增吧
+
+ 
+
+## 学习前提
+
+首先大家得食用一下基数排序，可以到百度百科学习，有个大概的印象就好
+
+ 
+
+## 一些定义
+
+sa[i]：排名为i的后缀的起始位置
+
+Rank[i]：从第i个位置开始的后缀的排名
+
+y[i]：意义与sa[i]一样，基数排序过程中要用
+
+ch[i]：字符串
+
+c[i]：统计次数（基数排序）
+
+sa[i],rank[i]只要我们知道一个便可以将另一个求出
+
+比如sa[i]=k;则rank[sa[i]]=i(rank[k]=i);
+
+## 倍增
+
+简单的讲啊，倍增就是先处理长度为1的后缀的排名，再处理长度为2的后缀的排名
+
+接着是长度为4的，然后是8......一直到长度k大于了字符串长度n；
+
+暴力的话复杂度太高，倍增的话复杂度可以做到O（nlogn）
+
+这样倍增有什么好处呢？？
+
+我们假定现在已经处理到长度为2^k的后缀了，（2^0,2^1,.....2^(k-1)已经处理）
+
+那么此时的排名其实可以通过长度为2^(k-1)的后缀的排名求出的
+
+2^k可有两个（2^(k-1)）的字符串拼成
+
+只需将这两个（2^(k-1)）的字符串分别作为基数排序的一，二关键字进行排序就可以得到此轮rank,sa。
+
+ 
+
+来一张经典的图加深理解
+
+![](1.png)
+
+注意如果没有第二关键字则补0；
+
+ 
+
+## 长度为1
+
+代码
+
+    
+
+```cpp
+
+for(int i=1;i<=n;++i)Rank[i]=ch[i];//首先Rank赋为字符串的asc码，即它的名
+//基数排序过程`
+for(int i=1;i<=n;++i)c[Rank[i]]++;
+for(int i=1;i<=m;++i)c[i]+=c[i-1];
+for(int i=n;i>=1;--i)sa[c[Rank[i]]--]=i;//--可以出理有字符串相同的情况
+
+```
+
+## 长度大于1
+
+接下来是一段很重要的代码，注意理解
+
+第二关键字的位置等于第一关键字的位置加上此时处理的后缀长度。
+
+第一个循环枚举第一关键字位置
+
+第二个枚举第二关键字位置
+
+此轮的y直接可以从上轮的sa得到
+
+y[k]=i表示排名为k的与第二关键字配对的第一关键字的位置
+
+```cpp
+
+for(int i=n-ln+1;i<=n;++i)y[++k]=i;//考虑补0的情况，肯定排在前面
+for(int i=1;i<=n;++i)if(sa[i]>ln)y[++k]=sa[i]-ln; 
+
+```
+
+这两个循环已经将第二关键字排序了，因为sa是有序的，枚举是从（i....n）已按大小排列
+
+大家再揣摩一下
+
+接下来排序第一关键字
+
+```cpp
+
+for(int i=1;i<=n;++i)wr[i]=Rank[i];//拷贝一下
+for(int i=1;i<=n;++i)c[wr[y[i]]]++;
+for(int i=1;i<=m;++i)c[i]+=c[i-1];
+for(int i=n;i>=1;--i)sa[c[wr[y[i]]]--]=y[i];
+for(int i=1;i<=n;++i)wr[i]=Rank[i]; 
+
+```
+
+这个比较好理解，就不讲了
+
+最后更新Rank
+
+要判一下重，相等的字符串给予相同的排名
+
+```cpp
+
+ bool cmp(int k1,int k2,int ls){
+    return wr[k1]==wr[k2]&&wr[k1+ls]==wr[k2+ls];
+}
+ 
+ for(int i=2;i<=n;++i){
+     if(!cmp(sa[i],sa[i-1],ln))++p;
+     Rank[sa[i]]=p;
+ }
+
+```
+
+## 完整代码
+
+```cpp
+
+#include<bits/stdc++.h>
+
+using namespace std;
+const int maxn=1000006;
+
+int wr[maxn],y[maxn],a[maxn],Rank[maxn],k;
+int sa[maxn],ln,p,n,m=256,c[maxn];char ch[maxn];
+
+bool cmp(int k1,int k2,int ls){
+    return wr[k1]==wr[k2]&&wr[k1+ls]==wr[k2+ls];
+}
+
+void DA(){
+    for(int i=1;i<=n;++i)c[Rank[i]]++;
+    for(int i=1;i<=m;++i)c[i]+=c[i-1];
+    for(int i=n;i>=1;--i)sa[c[Rank[i]]--]=i;
+    ln=1;p=0;
+    while(p<n){
+        k=0;
+        memset(c,0,sizeof c);
+        for(int i=n-ln+1;i<=n;++i)y[++k]=i;
+        for(int i=1;i<=n;++i)if(sa[i]>ln)y[++k]=sa[i]-ln;
+        for(int i=1;i<=n;++i)wr[i]=Rank[i];
+        for(int i=1;i<=n;++i)c[wr[y[i]]]++;
+        for(int i=1;i<=m;++i)c[i]+=c[i-1];
+        for(int i=n;i>=1;--i)sa[c[wr[y[i]]]--]=y[i];
+        for(int i=1;i<=n;++i)wr[i]=Rank[i];
+        p=1;Rank[sa[1]]=1;
+        for(int i=2;i<=n;++i){
+            if(!cmp(sa[i],sa[i-1],ln))++p;
+            Rank[sa[i]]=p;
+        }m=p;ln<<=1;
+    }
+}
+
+int main(){
+    scanf("%s",ch+1);
+    n=strlen(ch+1);
+    for(int i=1;i<=n;++i)Rank[i]=ch[i];
+    DA();
+    for(int i=1;i<=n;++i)printf("%d ",sa[i]);
+    return 0;
+}
+
+```
+
