@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="AK_Gang" />
+
+
+
+<meta name="description" content="后缀数组有什么用？处理字符串的一大利器 感觉这东西有点玄，网上也没有什么比较简单的讲解，我弄了几天（太菜） 写个学习笔记！！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后缀数组学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/04/23/后缀数组学习笔记/index.html">
+<meta property="og:site_name" content="AK_Gang&#39;s blog">
+<meta property="og:description" content="后缀数组有什么用？处理字符串的一大利器 感觉这东西有点玄，网上也没有什么比较简单的讲解，我弄了几天（太菜） 写个学习笔记！！">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/1095942/201803/1095942-20180325171137964-1583876915.png">
+<meta property="og:updated_time" content="2018-04-24T03:28:38.898Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后缀数组学习笔记">
+<meta name="twitter:description" content="后缀数组有什么用？处理字符串的一大利器 感觉这东西有点玄，网上也没有什么比较简单的讲解，我弄了几天（太菜） 写个学习笔记！！">
+<meta name="twitter:image" content="https://images2018.cnblogs.com/blog/1095942/201803/1095942-20180325171137964-1583876915.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="AK_Gang&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>后缀数组学习笔记 | AK_Gang&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.gif" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AK_Gang</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AK_Gang</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.gif" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AK_Gang</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-后缀数组学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/04/23/后缀数组学习笔记/" class="article-date">
+      <time datetime="2018-04-23T07:46:18.663Z" itemprop="datePublished">2018-04-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      后缀数组学习笔记
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="后缀数组有什么用？"><a href="#后缀数组有什么用？" class="headerlink" title="后缀数组有什么用？"></a>后缀数组有什么用？</h2><p>处理字符串的一大利器</p>
+<p>感觉这东西有点玄，网上也没有什么比较简单的讲解，我弄了几天（太菜）</p>
+<p>写个学习笔记！！</p>
+<a id="more"></a>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>1.dc3</p>
+<p>2.倍增</p>
+<p>由于本人太菜，只会倍增，就讲讲倍增吧</p>
+<h2 id="学习前提"><a href="#学习前提" class="headerlink" title="学习前提"></a>学习前提</h2><p>首先大家得食用一下基数排序，可以到百度百科学习，有个大概的印象就好</p>
+<h2 id="一些定义"><a href="#一些定义" class="headerlink" title="一些定义"></a>一些定义</h2><p>sa[i]：排名为i的后缀的起始位置</p>
+<p>Rank[i]：从第i个位置开始的后缀的排名</p>
+<p>y[i]：意义与sa[i]一样，基数排序过程中要用</p>
+<p>ch[i]：字符串</p>
+<p>c[i]：统计次数（基数排序）</p>
+<p>sa[i],rank[i]只要我们知道一个便可以将另一个求出</p>
+<p>比如sa[i]=k;则rank[sa[i]]=i(rank[k]=i);</p>
+<h2 id="倍增"><a href="#倍增" class="headerlink" title="倍增"></a>倍增</h2><p>简单的讲啊，倍增就是先处理长度为1的后缀的排名，再处理长度为2的后缀的排名</p>
+<p>接着是长度为4的，然后是8……一直到长度k大于了字符串长度n；</p>
+<p>暴力的话复杂度太高，倍增的话复杂度可以做到O（nlogn）</p>
+<p>这样倍增有什么好处呢？？</p>
+<p>我们假定现在已经处理到长度为2^k的后缀了，（2^0,2^1,…..2^(k-1)已经处理）</p>
+<p>那么此时的排名其实可以通过长度为2^(k-1)的后缀的排名求出的</p>
+<p>2^k可有两个（2^(k-1)）的字符串拼成</p>
+<p>只需将这两个（2^(k-1)）的字符串分别作为基数排序的一，二关键字进行排序就可以得到此轮rank,sa。</p>
+<p>来一张经典的图加深理解</p>
+<p><img src="https://images2018.cnblogs.com/blog/1095942/201803/1095942-20180325171137964-1583876915.png" alt="1"></p>
+<p>注意如果没有第二关键字则补0；</p>
+<h2 id="长度为1"><a href="#长度为1" class="headerlink" title="长度为1"></a>长度为1</h2><p>代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)Rank[i]=ch[i];<span class="comment">//首先Rank赋为字符串的asc码，即它的名</span></span><br><span class="line"><span class="comment">//基数排序过程`</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)c[Rank[i]]++;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;++i)c[i]+=c[i<span class="number">-1</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;--i)sa[c[Rank[i]]--]=i;<span class="comment">//--可以出理有字符串相同的情况</span></span><br></pre></td></tr></table></figure>
+<h2 id="长度大于1"><a href="#长度大于1" class="headerlink" title="长度大于1"></a>长度大于1</h2><p>接下来是一段很重要的代码，注意理解</p>
+<p>第二关键字的位置等于第一关键字的位置加上此时处理的后缀长度。</p>
+<p>第一个循环枚举第一关键字位置</p>
+<p>第二个枚举第二关键字位置</p>
+<p>此轮的y直接可以从上轮的sa得到</p>
+<p>y[k]=i表示排名为k的与第二关键字配对的第一关键字的位置</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=n-ln+<span class="number">1</span>;i&lt;=n;++i)y[++k]=i;<span class="comment">//考虑补0的情况，肯定排在前面</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)<span class="keyword">if</span>(sa[i]&gt;ln)y[++k]=sa[i]-ln;</span><br></pre></td></tr></table></figure>
+<p>这两个循环已经将第二关键字排序了，因为sa是有序的，枚举是从（i….n）已按大小排列</p>
+<p>大家再揣摩一下</p>
+<p>接下来排序第一关键字</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)wr[i]=Rank[i];<span class="comment">//拷贝一下</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)c[wr[y[i]]]++;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;++i)c[i]+=c[i<span class="number">-1</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;--i)sa[c[wr[y[i]]]--]=y[i];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)wr[i]=Rank[i];</span><br></pre></td></tr></table></figure>
+<p>这个比较好理解，就不讲了</p>
+<p>最后更新Rank</p>
+<p>要判一下重，相等的字符串给予相同的排名</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> k1,<span class="keyword">int</span> k2,<span class="keyword">int</span> ls)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> wr[k1]==wr[k2]&amp;&amp;wr[k1+ls]==wr[k2+ls];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i)&#123;</span><br><span class="line">     <span class="keyword">if</span>(!cmp(sa[i],sa[i<span class="number">-1</span>],ln))++p;</span><br><span class="line">     Rank[sa[i]]=p;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1000006</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> wr[maxn],y[maxn],a[maxn],Rank[maxn],k;</span><br><span class="line"><span class="keyword">int</span> sa[maxn],ln,p,n,m=<span class="number">256</span>,c[maxn];<span class="keyword">char</span> ch[maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> k1,<span class="keyword">int</span> k2,<span class="keyword">int</span> ls)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> wr[k1]==wr[k2]&amp;&amp;wr[k1+ls]==wr[k2+ls];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)c[Rank[i]]++;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;++i)c[i]+=c[i<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;--i)sa[c[Rank[i]]--]=i;</span><br><span class="line">    ln=<span class="number">1</span>;p=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(p&lt;n)&#123;</span><br><span class="line">        k=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">memset</span>(c,<span class="number">0</span>,<span class="keyword">sizeof</span> c);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=n-ln+<span class="number">1</span>;i&lt;=n;++i)y[++k]=i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)<span class="keyword">if</span>(sa[i]&gt;ln)y[++k]=sa[i]-ln;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)wr[i]=Rank[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)c[wr[y[i]]]++;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;++i)c[i]+=c[i<span class="number">-1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;--i)sa[c[wr[y[i]]]--]=y[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)wr[i]=Rank[i];</span><br><span class="line">        p=<span class="number">1</span>;Rank[sa[<span class="number">1</span>]]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!cmp(sa[i],sa[i<span class="number">-1</span>],ln))++p;</span><br><span class="line">            Rank[sa[i]]=p;</span><br><span class="line">        &#125;m=p;ln&lt;&lt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>,ch+<span class="number">1</span>);</span><br><span class="line">    n=<span class="built_in">strlen</span>(ch+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)Rank[i]=ch[i];</span><br><span class="line">    DA();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)<span class="built_in">printf</span>(<span class="string">"%d "</span>,sa[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/04/23/后缀数组学习笔记/">后缀数组学习笔记</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">AK_Gang</a></p>
+        <p><span>发布时间:</span>2018-04-23, 15:46:18</p>
+        <p><span>最后更新:</span>2018-04-24, 11:28:38</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/23/后缀数组学习笔记/" title="后缀数组学习笔记">http://yoursite.com/2018/04/23/后缀数组学习笔记/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/04/23/后缀数组学习笔记/　　作者: AK_Gang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/04/24/JDOJ-1119 Fibonacci sequence/">
+                    JDOJ-1119 Fibonacci sequence
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/04/23/hello-world/">
+                    Hello World
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#后缀数组有什么用？"><span class="toc-number">1.</span> <span class="toc-text">后缀数组有什么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法"><span class="toc-number">2.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习前提"><span class="toc-number">3.</span> <span class="toc-text">学习前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些定义"><span class="toc-number">4.</span> <span class="toc-text">一些定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#倍增"><span class="toc-number">5.</span> <span class="toc-text">倍增</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#长度为1"><span class="toc-number">6.</span> <span class="toc-text">长度为1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#长度大于1"><span class="toc-number">7.</span> <span class="toc-text">长度大于1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整代码"><span class="toc-number">8.</span> <span class="toc-text">完整代码</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"后缀数组学习笔记　| AK_Gang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/04/24/JDOJ-1119 Fibonacci sequence/" title="上一篇: JDOJ-1119 Fibonacci sequence">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/04/23/hello-world/" title="下一篇: Hello World">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/JDOJ-1119 Fibonacci sequence/">JDOJ-1119 Fibonacci sequence</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/23/后缀数组学习笔记/">后缀数组学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/23/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 AK_Gang
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
